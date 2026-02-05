@@ -28,7 +28,7 @@ export default function FAQPage() {
     return (
         <>
             <Head>
-                <title>{t.nav.faq} - SophIA</title>
+                <title>{`${t.nav.faq} - SophIA`}</title>
                 <meta name="description" content={t.meta.description} />
                 <link rel="icon" href="/logos/sophia.png" type="image/png" />
             </Head>

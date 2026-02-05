@@ -17,7 +17,7 @@ export default function About({ t }) {
         { ...t.about.team[1], img: '/img/guillermo.jpeg', linkedin: 'https://www.linkedin.com/in/guillermo-fer/' },
         { ...t.about.team[2], img: '/img/samuel.jpeg', linkedin: 'https://www.linkedin.com/in/samuel-garcia-dura-6aaa00226/' },
         { ...t.about.team[3], img: '/img/juan.jpeg', linkedin: 'https://www.linkedin.com/in/juan-leal-aliaga/' },
-        { ...t.about.team[0], img: '/team/iker.jpg', linkedin: 'https://www.linkedin.com/in/iker-acevedo-donate-a98349336/' }
+        { ...t.about.team[0], img: '/img/iker.jpg', linkedin: 'https://www.linkedin.com/in/iker-acevedo-donate-a98349336/' }
     ];
 
     return (

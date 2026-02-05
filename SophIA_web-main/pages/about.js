@@ -28,7 +28,7 @@ export default function AboutPage() {
     return (
         <>
             <Head>
-                <title>{t.nav.about} - SophIA</title>
+                <title>{`${t.nav.about} - SophIA`}</title>
                 <meta name="description" content={t.meta.description} />
                 <link rel="icon" href="/logos/sophia.png" type="image/png" />
             </Head>

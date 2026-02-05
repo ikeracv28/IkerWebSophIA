@@ -197,7 +197,8 @@ export const translations = {
       what: "What is SophIA",
       how: "How it works",
       about: "About us",
-      contact: "Contact"
+      contact: "Contact",
+      faq: "FAQ"
     },
     // Hero Section
     hero: {
