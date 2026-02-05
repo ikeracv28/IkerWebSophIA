@@ -32,29 +32,33 @@ export default function FAQ({ t }) {
                             onClick={() => toggleAccordion(idx)}
                             style={{
                                 width: '100%',
-                                padding: '20px',
+                                padding: '24px', // Increased padding for breathing room
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                alignItems: 'center',
+                                alignItems: 'flex-start', // Align to top in case of multi-line text
+                                gap: '16px', // Clear gap between text and icon
                                 background: 'none',
                                 border: 'none',
                                 color: 'var(--fg)',
                                 fontSize: '1.1rem',
                                 fontWeight: '600',
                                 cursor: 'pointer',
-                                textAlign: 'left'
+                                textAlign: 'left',
+                                lineHeight: '1.4' // Better line height for multi-line questions
                             }}
                         >
-                            <span style={{ marginRight: '16px' }}>{item.q}</span>
+                            <span style={{ flex: 1 }}>{item.q}</span>
                             <span style={{
                                 display: 'inline-flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
+                                marginTop: '2px', // Slight optical adjustment for top alignment
                                 transform: activeIndex === idx ? 'rotate(180deg)' : 'rotate(0deg)',
                                 transition: 'transform 0.3s ease',
-                                opacity: 0.7
+                                opacity: 0.7,
+                                flexShrink: 0 // Prevent icon from shrinking
                             }}>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M6 9l6 6 6-6" />
                                 </svg>
                             </span>
@@ -64,10 +68,11 @@ export default function FAQ({ t }) {
                                 height: activeIndex === idx ? 'auto' : '0',
                                 overflow: 'hidden',
                                 opacity: activeIndex === idx ? 1 : 0,
-                                transition: 'all 0.3s ease'
+                                transition: 'all 0.3s ease',
+                                borderTop: activeIndex === idx ? '1px solid rgba(255,255,255,0.1)' : '1px solid transparent'
                             }}
                         >
-                            <div style={{ padding: '0 20px 24px 20px', color: 'var(--muted)', lineHeight: '1.6' }}>
+                            <div style={{ padding: '24px', color: 'var(--muted)', lineHeight: '1.6' }}>
                                 {item.a}
                             </div>
                         </div>
