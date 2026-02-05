@@ -12,7 +12,7 @@ export default function About({ t }) {
 
     const revealClass = `${styles.reveal} ${visible ? styles.revealVisible : ''}`;
 
-    // Usar rutas relativas para Next.js Image
+    // Use relative paths for Next.js Image
     const team = [
         { ...t.about.team[1], img: '/img/guillermo.jpeg', linkedin: 'https://www.linkedin.com/in/guillermo-fer/' },
         { ...t.about.team[2], img: '/img/samuel.jpeg', linkedin: 'https://www.linkedin.com/in/samuel-garcia-dura-6aaa00226/' },

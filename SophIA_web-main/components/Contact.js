@@ -10,9 +10,9 @@ export default function Contact({ t, lang }) {
         e.preventDefault();
         const form = e.target;
 
-        // Verificación de validación simple del lado del cliente (HTML5 'required' maneja la mayoría)
+        // Simple client-side validation check (HTML5 'required' handles most of it)
         if (!form.checkValidity()) {
-            // lógica manejada por el navegador
+            // logic handled by browser
             return;
         }
 
@@ -50,10 +50,10 @@ export default function Contact({ t, lang }) {
             setFormStatus('error');
             setStatusMsg(lang === 'es' ? 'Error. Inténtalo de nuevo.' : 'Error. Please try again.');
         } finally {
-            // ¿Restablecer estado después de un retraso si es exitoso, o mantener error hasta reintento?
-            // El usuario solicitó el mensaje "Demo Solicitada con Éxito".
+            // Reset state after delay if successful, or keep error until retry?
+            // User requested "Request Sent Successfully" message.
             if (formStatus === 'success') {
-                setTimeout(() => setFormStatus('idle'), 5000); // limpieza opcional
+                setTimeout(() => setFormStatus('idle'), 5000); // optional cleanup
             }
         }
     };
@@ -122,7 +122,7 @@ export default function Contact({ t, lang }) {
                                 : (formStatus === 'success' ? (lang === 'es' ? 'Demo Solicitada con Éxito' : 'Request Sent') : t.contact.form.submit)
                             }
                         </button>
-                        {/* Mensaje de Retroalimentación */}
+                        {/* Feedback Message */}
                         {statusMsg && (
                             <span style={{ color: formStatus === 'error' ? '#ef4444' : '#10b981', fontSize: '0.9rem', marginTop: '5px' }}>
                                 {statusMsg}

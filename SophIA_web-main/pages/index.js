@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import { translations } from "../locales/translations";
 import useScrollReveal from "../hooks/useScrollReveal";
-// useMouseTrail removed for performance/clean design choice
 
-// Componentes
+
+// Components
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Footer from "../components/Footer";
@@ -23,7 +23,7 @@ export default function Home() {
 
   const t = translations[lang];
 
-  // Cargar preferencia de idioma guardada al montar
+  // Load saved language preference on mount
   useEffect(() => {
     const savedLang = localStorage.getItem('sophia-lang');
     if (savedLang && (savedLang === 'es' || savedLang === 'en')) {
@@ -31,12 +31,12 @@ export default function Home() {
     }
   }, []);
 
-  // Guardar preferencia de idioma cuando cambia
+  // Save language preference when it changes
   useEffect(() => {
     localStorage.setItem('sophia-lang', lang);
   }, [lang]);
 
-  // Manejar Desplazamiento por Hash
+  // Handle Hash Scrolling
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
@@ -44,7 +44,7 @@ export default function Home() {
           history.replaceState(null, '', window.location.pathname + window.location.search);
         }
       } catch (e) {
-        // ignorar
+        // ignore
       }
       const id = setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 50);
       return () => clearTimeout(id);

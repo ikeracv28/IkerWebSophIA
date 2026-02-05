@@ -2,7 +2,7 @@
 
 .page {
   min-height: 100vh;
-  /* Trail effect is handled by Canvas in useMouseTrail hook */
+
   background: var(--bg);
   background-attachment: fixed;
   /* Keep background static while content scrolls */
@@ -214,66 +214,9 @@
 }
 
 /* Liquid effect layer: REPLACED WITH STATIC GRADIENT FOR MAX PERFORMANCE */
-.liquid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-  background:
-    radial-gradient(circle at 15% 50%, rgba(93, 208, 255, 0.25), transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(167, 139, 250, 0.25), transparent 25%);
-}
 
-/* Removed heavy animations and pseudo-elements */
-.liquid::before,
-.liquid::after {
-  display: none;
-}
 
-@keyframes blobMove1 {
-  0% {
-    transform: translate(-40%, -50%) scale(1);
-  }
 
-  25% {
-    transform: translate(-10%, -60%) scale(1.05);
-  }
-
-  50% {
-    transform: translate(10%, -40%) scale(1.02);
-  }
-
-  75% {
-    transform: translate(-5%, -30%) scale(1.06);
-  }
-
-  100% {
-    transform: translate(-40%, -50%) scale(1);
-  }
-}
-
-@keyframes blobMove2 {
-  0% {
-    transform: translate(-50%, -40%) scale(1);
-  }
-
-  25% {
-    transform: translate(-70%, -20%) scale(1.07);
-  }
-
-  50% {
-    transform: translate(-30%, -10%) scale(1.03);
-  }
-
-  75% {
-    transform: translate(-60%, -60%) scale(1.05);
-  }
-
-  100% {
-    transform: translate(-50%, -40%) scale(1);
-  }
-}
 
 /* Ensure hero content is above liquid layer */
 .heroCard>.heroContent {
@@ -1914,11 +1857,23 @@
 }
 
 /* Alternating Layout */
-.timelineItem:nth-child(odd) { justify-content: flex-start; }
-.timelineItem:nth-child(even) { justify-content: flex-end; }
+.timelineItem:nth-child(odd) {
+  justify-content: flex-start;
+}
 
-.timelineItem:nth-child(odd) .timelineContent { margin-left: auto; margin-right: 55%; }
-.timelineItem:nth-child(even) .timelineContent { margin-right: auto; margin-left: 55%; }
+.timelineItem:nth-child(even) {
+  justify-content: flex-end;
+}
+
+.timelineItem:nth-child(odd) .timelineContent {
+  margin-left: auto;
+  margin-right: 55%;
+}
+
+.timelineItem:nth-child(even) .timelineContent {
+  margin-right: auto;
+  margin-left: 55%;
+}
 
 .timelineTitle {
   font-size: 1.5rem;
@@ -1942,9 +1897,24 @@
 }
 
 @media (max-width: 768px) {
-  .timeline::before { left: 20px; }
-  .timelineItem { flex-direction: column; align-items: flex-start; margin-left: 50px; width: calc(100% - 50px); }
-  .timelineMarker { left: 20px; transform: translateX(-50%); }
-  .timelineContent { width: 100%; margin: 0 !important; }
-}
+  .timeline::before {
+    left: 20px;
+  }
 
+  .timelineItem {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 50px;
+    width: calc(100% - 50px);
+  }
+
+  .timelineMarker {
+    left: 20px;
+    transform: translateX(-50%);
+  }
+
+  .timelineContent {
+    width: 100%;
+    margin: 0 !important;
+  }
+}

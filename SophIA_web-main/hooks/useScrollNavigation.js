@@ -4,19 +4,19 @@ import { useRouter } from 'next/router';
 
 export default function useScrollNavigation(nextPath, prevPath) {
     const router = useRouter();
-    // Cooldown al montar para evitar navegación instantánea
+    // Cooldown on mount to prevent instant navigation
     const onCooldown = useRef(true);
-    // Bloqueo mientras se realiza la navegación
+    // Block while navigating
     const isNavigating = useRef(false);
-    // Acumulador de intención
+    // Intent accumulator
     const wheelAccumulator = useRef(0);
-    // Para estado de bordes
+    // Edge state tracking
     const wasAtEdgeLower = useRef(false);
     const wasAtEdgeUpper = useRef(false);
-    // Timestamps para "tiempo de asentamiento" en los bordes
+    // Timestamps for "settling time" at the edges
     const edgeEntryTime = useRef(0);
 
-    // 1. Posición de Scroll: SIEMPRE ARRIBA
+    // 1. Scroll Position: ALWAYS TOP
     useEffect(() => {
         const forceScrollTop = () => {
             if ('scrollRestoration' in history) {
@@ -27,12 +27,12 @@ export default function useScrollNavigation(nextPath, prevPath) {
             document.documentElement.scrollTop = 0;
         };
 
-        // Al montar
+        // On mount
         forceScrollTop();
         // Backup
         setTimeout(forceScrollTop, 50);
 
-        // Al cambiar de ruta (seguridad extra)
+        // On route change (extra safety)
         const handleRouteChange = () => {
             forceScrollTop();
         };
@@ -48,7 +48,7 @@ export default function useScrollNavigation(nextPath, prevPath) {
         };
     }, [router]);
 
-    // 2. Lógica de Navegación (Wheel)
+    // 2. Navigation Logic (Wheel)
     useEffect(() => {
         wheelAccumulator.current = 0;
         isNavigating.current = false;
@@ -65,29 +65,29 @@ export default function useScrollNavigation(nextPath, prevPath) {
             const windowHeight = window.innerHeight;
             const docHeight = document.documentElement.scrollHeight;
 
-            // Detección estricta 
-            // Usamos Math.ceil en scrollTop para asegurar enteros y comparamos sumas
+            // Strict detection
+            // Use Math.ceil on scrollTop to ensure integers and compare sums
             const isStrictlyAtBottom = (scrollTop + windowHeight) >= (docHeight - 1);
             const isStrictlyAtTop = scrollTop <= 1;
 
-            // UMBRAL ALTO (Requiere gesto fuerte)
+            // HIGH THRESHOLD (Requires strong gesture)
             const THRESHOLD = 200;
-            // TIEMPO DE SEGURIDAD MUY ALTO (1 segundo)
-            // Hay que estar 1 segundo parado en el fondo antes de poder cambiar
+            // VERY HIGH SAFETY DELAY (1 second)
+            // Must stay at the bottom for 1 second before allowing change
             const EDGE_SAFETY_DELAY = 1000;
 
             const now = Date.now();
 
-            // --- NAVEGAR ABAJO (NEXT) ---
+            // --- NAVIGATE DOWN (NEXT) ---
             if (nextPath && e.deltaY > 0) {
                 if (isStrictlyAtBottom) {
                     if (!wasAtEdgeLower.current) {
-                        // Acabamos de tocar fondo
+                        // Just touched bottom
                         wasAtEdgeLower.current = true;
                         wheelAccumulator.current = 0;
                         edgeEntryTime.current = now;
                     } else {
-                        // Ya estamos en el fondo. ¿Ha pasado el segundo de seguridad?
+                        // Already at bottom. Has the safety second passed?
                         if (now - edgeEntryTime.current > EDGE_SAFETY_DELAY) {
                             wheelAccumulator.current += e.deltaY;
                             if (wheelAccumulator.current > THRESHOLD) {
@@ -95,7 +95,7 @@ export default function useScrollNavigation(nextPath, prevPath) {
                                 router.push(nextPath);
                             }
                         } else {
-                            // Ignorar inercia
+                            // Ignore inertia
                             wheelAccumulator.current = 0;
                         }
                     }
@@ -105,7 +105,7 @@ export default function useScrollNavigation(nextPath, prevPath) {
                 }
             }
 
-            // --- NAVEGAR ARRIBA (PREV) ---
+            // --- NAVIGATE UP (PREV) ---
             else if (prevPath && e.deltaY < 0) {
                 if (isStrictlyAtTop) {
                     if (!wasAtEdgeUpper.current) {

@@ -33,7 +33,7 @@ export default function Trust({ t }) {
 
             <div className={`${styles.trustWrapper} ${revealClass} ${styles.revealFade} ${styles.delay400}`}>
                 <div className={styles.trustTrack}>
-                    {/* duplicar secuencia para bucle continuo */}
+                    {/* Duplicate sequence for continuous loop */}
                     {trustData.concat(trustData).map((item, i) => (
                         <a
                             key={`${item.src}-${i}`}
