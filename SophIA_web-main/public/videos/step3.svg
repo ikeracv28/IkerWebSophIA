@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .bg { fill: transparent }
+    .card { fill: rgba(255,255,255,0.02); stroke: rgba(255,255,255,0.04) }
+    .textFg { fill: #e6eef8; font-family: Inter, system-ui, Arial, sans-serif; font-weight: 600 }
+    .cursor { fill: #5dd0ff }
+
+    .revealMask rect { animation: reveal 4s linear forwards }
+    @keyframes reveal { 0%{ width:0 } 100%{ width:520px } }
+    .caretAnim { animation: blink 1s steps(2,end) infinite }
+    @keyframes blink { 0%{ opacity:1 } 50%{ opacity:0 } 100%{ opacity:1 } }
+  </style>
+
+  <rect class="bg" width="800" height="450" />
+  <g transform="translate(140,70)">
+    <rect class="card" width="520" height="310" rx="14" />
+
+    <!-- headline -->
+    <g transform="translate(40,90)">
+      <text x="0" y="0" class="textFg" font-size="28">Generando retroalimentación...</text>
+      <g transform="translate(0,18)">
+        <!-- long paragraph as text lines -->
+        <g>
+          <text x="0" y="36" class="textFg" font-size="18">
+            <tspan x="0" dy="0">Analizando respuestas y construyendo comentarios personalizados para cada alumno.</tspan>
+          </text>
+        </g>
+
+        <!-- mask that reveals the paragraph from left to right -->
+        <defs>
+          <clipPath id="revealClip"><rect x="0" y="8" width="0" height="80" rx="2" /></clipPath>
+        </defs>
+        <g clip-path="url(#revealClip)">
+          <text x="0" y="36" class="textFg" font-size="18">
+            <tspan x="0" dy="0">Analizando respuestas y construyendo comentarios personalizados para cada alumno.</tspan>
+          </text>
+        </g>
+        <!-- animate the clip rect -->
+        <rect x="0" y="8" width="0" height="80" rx="2" fill="rgba(255,255,255,0.02)">
+          <animate attributeName="width" from="0" to="520" dur="4s" begin="0s" fill="freeze" />
+        </rect>
+
+        <!-- caret -->
+        <rect x="520" y="24" width="6" height="20" class="cursor caretAnim" rx="1" />
+      </g>
+    </g>
+  </g>
+</svg>

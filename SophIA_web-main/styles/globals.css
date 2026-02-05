@@ -1,0 +1,83 @@
+
+/* Custom Font */
+@font-face {
+  font-family: 'Gambarino';
+  src: url('/fonts/Gambarino-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Reset ligero y variables de diseño para tema moderno y accesible */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; overflow-x: hidden; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: 'Gambarino', Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.45;
+  font-size: 17px;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+:root {
+  /* Palette (elegant black theme) */
+  --bg: #0a0f1a; /* dark blue-grey, softer than pure black */
+  --bg-2: #111827; /* elevated backgrounds */
+  --card: rgba(255,255,255,0.03);
+  --fg: #e6eef8; /* near-white for text */
+  --muted: #9aa6b8;
+  --subtle: rgba(255,255,255,0.06);
+  --accent: #5dd0ff; /* soft cyan */
+  --accent-2: #a78bfa; /* soft purple */
+  --accent-gradient: linear-gradient(90deg,var(--accent),var(--accent-2));
+  --danger: #ff6b6b;
+  --radius-sm: 8px;
+  --radius-lg: 14px;
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.6);
+  --glass: rgba(255,255,255,0.02);
+  --max-width: 1120px;
+}
+
+/* Utility containers */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+/* Accessibility helpers */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+/* Focus styles */
+:focus { outline: 3px solid rgba(93,208,255,0.18); outline-offset: 3px; }
+
+/* Default typography */
+h1,h2,h3,h4 { color: var(--fg); margin: 0 0 12px 0; font-weight: 700; }
+p { margin: 0 0 14px 0; color: var(--muted); }
+
+/* Buttons baseline (components will override) */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; border: 0; padding: 10px 16px; border-radius: 10px;
+  background: var(--accent); color: #021025; font-weight: 600; transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(5,12,30,0.5); }
+
+/* Small form elements */
+input, textarea { font: inherit; color: var(--fg); background: transparent; border: 1px solid var(--subtle); padding: 10px 12px; border-radius: 8px; }
+
+/* Utility spacing */
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mb-16 { margin-bottom: 16px; }
+
+/* Smooth images */
+img { display: block; max-width: 100%; height: auto; }
+
+/* Small responsive helpers */
+@media (max-width: 720px) {
+  :root { --max-width: 920px; }
+}
+

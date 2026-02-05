@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .bg { fill: transparent }
+    .card { fill: rgba(255,255,255,0.02); stroke: rgba(255,255,255,0.04) }
+    .sliceA { stroke: #5dd0ff; stroke-width:34; fill:none; stroke-linecap:butt }
+    .sliceB { stroke: #a78bfa; stroke-width:34; fill:none; stroke-linecap:butt }
+    .sliceC { stroke: #7fd1ff; stroke-width:34; fill:none; stroke-linecap:butt }
+    .center { fill: rgba(2,8,14,0.6); stroke: rgba(255,255,255,0.03) }
+
+    .rot { transform-origin: 400px 225px; animation: rot 6s linear infinite }
+    .pulseA { animation: pulseA 3s ease-in-out infinite }
+    .pulseB { animation: pulseB 3.6s ease-in-out infinite }
+
+    @keyframes rot { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+    @keyframes pulseA { 0%{opacity:1}50%{opacity:0.75}100%{opacity:1} }
+    @keyframes pulseB { 0%{opacity:0.9}50%{opacity:0.6}100%{opacity:0.9} }
+  </style>
+
+  <rect class="bg" width="800" height="450" />
+  <g transform="translate(100,50)">
+    <rect class="card" width="600" height="350" rx="16" />
+
+    <!-- Donut chart centered -->
+    <g class="rot">
+      <!-- base circle (ghost) -->
+      <circle cx="400" cy="225" r="70" fill="rgba(255,255,255,0.01)" />
+
+      <!-- slices drawn as arcs using circles with stroke-dasharray -->
+      <!-- full circumference = 2*pi*70 ~ 439.82 -->
+      <circle class="sliceA pulseA" cx="400" cy="225" r="70" stroke-dasharray="180 260" stroke-dashoffset="0" transform="rotate(-90 400 225)" />
+      <circle class="sliceB pulseB" cx="400" cy="225" r="70" stroke-dasharray="120 320" stroke-dashoffset="120" transform="rotate(-90 400 225)" />
+      <circle class="sliceC" cx="400" cy="225" r="70" stroke-dasharray="60 380" stroke-dashoffset="300" transform="rotate(-90 400 225)" />
+
+      <!-- small center chip -->
+      <circle class="center" cx="400" cy="225" r="36" />
+    </g>
+
+    <!-- Add subtle animated legend bars at the bottom -->
+    <g transform="translate(240,320)">
+      <rect x="0" y="0" width="120" height="10" rx="5" fill="#5dd0ff" opacity="0.12" />
+      <rect x="140" y="0" width="120" height="10" rx="5" fill="#a78bfa" opacity="0.12" />
+    </g>
+  </g>
+</svg>

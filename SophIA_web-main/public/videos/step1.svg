@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .bg { fill: transparent }
+    .card { fill: rgba(255,255,255,0.02); stroke: rgba(255,255,255,0.04) }
+    .accentA { fill: #5dd0ff }
+    .accentB { fill: #a78bfa }
+    .boxFill { fill: rgba(255,255,255,0.03) }
+    .dashed { stroke: rgba(255,255,255,0.14); stroke-width: 2; stroke-dasharray: 8 8; fill: none; stroke-linecap: round }
+    .doc { fill: rgba(230,238,248,0.06); stroke: rgba(230,238,248,0.18); stroke-width:1 }
+    .cursor { fill: #ffffff; stroke: rgba(0,0,0,0.28); stroke-width:0.9 }
+    .shadow { filter: drop-shadow(0 8px 18px rgba(0,0,0,0.6)) }
+  </style>
+
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0%" stop-color="#5dd0ff" />
+      <stop offset="100%" stop-color="#a78bfa" />
+    </linearGradient>
+  </defs>
+
+  <rect class="bg" width="800" height="450" />
+
+  <!-- main card area -->
+  <g transform="translate(120,60)">
+    <rect class="card" x="0" y="0" width="560" height="330" rx="12" />
+
+    <!-- dashed upload box (target) on the right side of card -->
+    <g id="target" transform="translate(320,110)" class="shadow">
+      <rect x="0" y="0" width="200" height="140" rx="10" class="boxFill" />
+      <rect x="6" y="6" width="188" height="128" rx="8" class="dashed" />
+    </g>
+
+    <!-- document that will be dragged -->
+    <g id="doc" transform="translate(40,180)" class="shadow">
+      <rect class="doc" x="0" y="0" width="84" height="108" rx="6" />
+      <path d="M66 0 L84 18 L66 18 Z" fill="rgba(255,255,255,0.03)" />
+      <rect x="12" y="18" width="56" height="10" rx="4" fill="rgba(255,255,255,0.02)" />
+      <rect x="12" y="36" width="44" height="8" rx="4" fill="rgba(255,255,255,0.02)" />
+      <!-- movement: translate x,y values to move into the target and stay; loop will reset instantly -->
+      <animateTransform id="docMove" attributeName="transform" type="translate" dur="5s" repeatCount="indefinite"
+        values="40,180; 378,126; 378,126" keyTimes="0;0.44;1" />
+    </g>
+
+    <!-- cursor that follows slightly ahead of the document -->
+    <g id="cursor" transform="translate(20,220)" class="shadow">
+      <path class="cursor" d="M0 0 L12 22 L8 18 L14 18 L0 0" />
+      <animateTransform id="cursorMove" attributeName="transform" type="translate" dur="5s" repeatCount="indefinite"
+        values="20,220; 378,126; 378,126" keyTimes="0;0.44;1" />
+    </g>
+
+    <!-- progress bar inside the target box -->
+    <g transform="translate(320,110)">
+      <rect x="18" y="116" width="164" height="8" rx="4" fill="rgba(255,255,255,0.03)" />
+      <rect x="18" y="116" width="0" height="8" rx="4" fill="url(#g1)">
+        <!-- values/keyTimes sequence: stay 0 until 0.44, fill to 164 instantly at 0.44, hold until 0.8, then go back to 0 at end -->
+        <animate attributeName="width" begin="docMove.begin" dur="5s" repeatCount="indefinite"
+          values="0;0;164;164;0" keyTimes="0;0.44;0.44;0.8;1" />
+      </rect>
+      <!-- checkmark removed as requested -->
+    </g>
+
+    <!-- subtle decorative blobs using palette -->
+    <circle cx="60" cy="60" r="18" fill="#5dd0ff" opacity="0.06" />
+    <circle cx="500" cy="260" r="26" fill="#a78bfa" opacity="0.05" />
+  </g>
+</svg>

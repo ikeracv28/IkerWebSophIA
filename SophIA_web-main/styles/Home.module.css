@@ -1,0 +1,1564 @@
+@import './globals.css';
+
+.page {
+  min-height: 100vh;
+  /* Trail effect is handled by Canvas in useMouseTrail hook */
+  background: var(--bg);
+  background-attachment: fixed;
+  /* Keep background static while content scrolls */
+  color: var(--fg);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.shell {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* NAVBAR */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(15, 15, 25, 0.95));
+  backdrop-filter: blur(10px);
+  /* Bottom border uses the accent gradient for a subtle highlight */
+  border-bottom: 3px solid transparent;
+  border-image-source: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-image-slice: 1;
+  padding: 16px 20px;
+  margin: 0 -20px;
+}
+
+.navInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--fg);
+  font-size: 1.5rem;
+}
+
+.logoMark {
+  width: 32px;
+  height: 32px;
+  border-radius: 0;
+  background: transparent;
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #ffffff;
+  border: none;
+  object-fit: contain;
+  padding: 0;
+  filter: brightness(0) invert(1);
+}
+
+.navLinks {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.navLink {
+  color: var(--muted);
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.2s ease;
+}
+
+.navLink:hover,
+.navLinkActive {
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Language selector */
+.langSelector {
+  display: flex;
+  align-items: center;
+}
+
+.langSelect {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(93, 208, 255, 0.2);
+  color: var(--fg);
+  /* ensure select uses the same site typography */
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235DD0FF' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.langSelect:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(93, 208, 255, 0.4);
+}
+
+.langSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(93, 208, 255, 0.2);
+}
+
+.langSelect option {
+  background: #031226;
+  color: var(--fg);
+  padding: 8px;
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+
+/* HERO */
+/* HERO: make full-screen section so the black site background only appears after scroll */
+.hero {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  /* allows a fade overlay at the bottom */
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  will-change: transform;
+  transform: translateY(-48px);
+}
+
+/* Animated hero card with moving blue-purple gradient */
+/* Full-viewport animated hero card: translucent gradient so text remains readable */
+.heroCard {
+  width: 100vw;
+  height: 100vh;
+  padding: 80px 24px;
+  border-radius: 0;
+  overflow: hidden;
+  /* slightly more opaque translucent gradient to improve text contrast */
+  background: linear-gradient(200deg, rgba(93, 208, 255, 0.16), rgba(167, 139, 250, 0.14));
+  background-size: 200% 200%;
+  animation: gradientShift 12s linear infinite;
+  box-shadow: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg);
+  backdrop-filter: blur(4px);
+  /* Make the hero card escape the constrained .shell container and span the full viewport width */
+  position: relative;
+  /* Offset the card so it aligns exactly with the viewport edges regardless of parent width */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Dark overlay to increase text contrast over the animated liquid */
+.heroCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 26, 0.36);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Fade the hero into the dark page background to soften the hand-off to the next section */
+.heroCard::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 360px;
+  background: linear-gradient(180deg, rgba(10, 15, 26, 0) 0%, rgba(10, 15, 26, 0.38) 40%, rgba(10, 15, 26, 0.68) 70%, #0a0f1a 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Liquid effect layer: blurred moving color blobs using accent colors */
+.liquid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.liquid::before,
+.liquid::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 80vmax;
+  height: 80vmax;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(120px) saturate(140%);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+.liquid::before {
+  background: radial-gradient(circle at 30% 30%, rgba(93, 208, 255, 0.85) 0%, rgba(93, 208, 255, 0.25) 25%, transparent 40%), radial-gradient(circle at 70% 70%, rgba(167, 139, 250, 0.6) 0%, rgba(167, 139, 250, 0.12) 30%, transparent 45%);
+  animation: blobMove1 14s linear infinite;
+}
+
+.liquid::after {
+  background: radial-gradient(circle at 20% 70%, rgba(167, 139, 250, 0.7) 0%, rgba(167, 139, 250, 0.15) 25%, transparent 40%), radial-gradient(circle at 80% 30%, rgba(93, 208, 255, 0.6) 0%, rgba(93, 208, 255, 0.12) 28%, transparent 42%);
+  animation: blobMove2 18s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes blobMove1 {
+  0% {
+    transform: translate(-40%, -50%) scale(1);
+  }
+
+  25% {
+    transform: translate(-10%, -60%) scale(1.05);
+  }
+
+  50% {
+    transform: translate(10%, -40%) scale(1.02);
+  }
+
+  75% {
+    transform: translate(-5%, -30%) scale(1.06);
+  }
+
+  100% {
+    transform: translate(-40%, -50%) scale(1);
+  }
+}
+
+@keyframes blobMove2 {
+  0% {
+    transform: translate(-50%, -40%) scale(1);
+  }
+
+  25% {
+    transform: translate(-70%, -20%) scale(1.07);
+  }
+
+  50% {
+    transform: translate(-30%, -10%) scale(1.03);
+  }
+
+  75% {
+    transform: translate(-60%, -60%) scale(1.05);
+  }
+
+  100% {
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+/* Ensure hero content is above liquid layer */
+.heroCard>.heroContent {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Ensure text inside the translucent hero is readable (light text over semi-transparent gradient) */
+.heroCard .heroTitle {
+  color: var(--fg);
+}
+
+.heroCard .heroSubtitle,
+.heroCard .heroTag {
+  color: rgba(230, 238, 248, 0.9);
+}
+
+.heroTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 24px;
+}
+
+.heroTagDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 20px rgba(93, 208, 255, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.heroTitle {
+  font-size: 4rem;
+  line-height: 1.1;
+  color: var(--fg);
+  margin: 0 0 24px 0;
+  font-weight: 800;
+}
+
+.heroTitle span {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Force hero title to appear on a single line on larger screens */
+.heroTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.heroSubtitle {
+  color: var(--muted);
+  max-width: 700px;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.heroActions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  justify-content: center;
+}
+
+.primaryBtn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #031226;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.15rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(93, 208, 255, 0.3);
+}
+
+.primaryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(93, 208, 255, 0.4);
+}
+
+.secondaryBtn {
+  background: transparent;
+  color: var(--fg);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 30px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.15rem;
+  transition: all 0.3s ease;
+}
+
+.secondaryBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.heroMeta {
+  display: flex;
+  gap: 24px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* SECTIONS */
+.section {
+  padding: 120px 0;
+  position: relative;
+  margin: 80px 0 0 0;
+}
+
+/* Gentle fade at the top of the first section to blend with the hero */
+.section:first-of-type::after {
+  content: "";
+  position: absolute;
+  top: -140px;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(180deg, rgba(10, 15, 26, 0), rgba(10, 15, 26, 0.55) 55%, rgba(10, 15, 26, 0.9));
+  pointer-events: none;
+}
+
+/* Decorative gradient line between sections */
+.section::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1200px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent) 20%, var(--accent-2) 80%, transparent);
+  opacity: 0.8;
+  border-radius: 1px;
+  box-shadow: 0 0 20px rgba(93, 208, 255, 0.4), 0 0 40px rgba(93, 208, 255, 0.2);
+}
+
+/* Remove line from first section */
+.section:first-of-type::before {
+  display: none;
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px;
+}
+
+.sectionKicker {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  font-size: 2.8rem;
+  color: var(--fg);
+  margin-bottom: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.sectionSubtitle {
+  color: var(--muted);
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+
+/* HOW - video-like presentation styles */
+.howVideo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0 8px;
+  box-sizing: border-box;
+  margin-top: 36px;
+}
+
+.howVideoStage {
+  width: 100%;
+  max-width: 1100px;
+  text-align: center;
+  padding: 8px 16px;
+  border-radius: 14px;
+  position: relative;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.howMainTitle {
+  font-size: 2.8rem;
+  color: var(--accent);
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+  opacity: 0;
+  transform: translateY(4px);
+  animation: fadeInUp 700ms ease forwards;
+}
+
+.howMainSubtitle {
+  color: #ffffff;
+  max-width: 900px;
+  margin: 0 auto 0;
+  padding-top: 6px;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(2px);
+  animation: fadeInUp 700ms 100ms ease forwards;
+}
+
+/* Remove extra gap above/below header in #how so texts sit flush */
+:global(#how) .sectionHeader {
+  margin-bottom: 48px;
+  padding-bottom: 0;
+}
+
+.howVideoContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+}
+
+/* Remove subtitle bottom margin inside #how header to bring steps closer */
+:global(#how) .sectionHeader .sectionSubtitle {
+  margin-bottom: 0;
+}
+
+.howStepStage {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px 48px;
+  align-items: start;
+  justify-items: center;
+}
+
+.howStepCard {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  justify-content: flex-start;
+  opacity: 0.45;
+  transform: none;
+  transition: all 320ms cubic-bezier(.2, .9, .2, 1);
+}
+
+.howStepActive {
+  opacity: 1;
+  transform: translateY(-8px) scale(1.06);
+  box-shadow: 0 28px 88px rgba(2, 8, 14, 0.7);
+}
+
+.howStepHidden {
+  opacity: 0.28;
+  filter: grayscale(15%);
+}
+
+.stepNumberLarge {
+  font-weight: 800;
+  font-size: 44px;
+  color: rgba(93, 208, 255, 0.95);
+  width: 64px;
+  text-align: center;
+}
+
+.stepContentLarge {
+  text-align: left;
+  max-width: 300px;
+}
+
+.stepTitleLarge {
+  font-size: 1.5rem;
+  margin: 0 0 6px;
+  color: var(--fg);
+  font-weight: 800;
+}
+
+.stepDescLarge {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.howStepVisual {
+  width: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.howPreviewImgSmall {
+  width: 360px;
+  height: 260px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: block;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1200px) {
+  .howStepStage {
+    grid-template-columns: 1fr;
+  }
+
+  .howStepCard {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .stepContentLarge {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .howStepVisual {
+    width: 100%;
+  }
+
+  .howPreviewImgSmall {
+    width: 100%;
+    height: 360px;
+  }
+
+  .stepNumberLarge {
+    font-size: 40px;
+  }
+
+  .howMainTitle {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .howPreviewImgSmall {
+    height: 300px;
+  }
+
+  .stepNumberLarge {
+    font-size: 34px;
+  }
+}
+
+/* Force subtitle color inside the how section in case of cascade conflicts */
+:global(#how) .howMainSubtitle {
+  color: #ffffff !important;
+}
+
+/* FEATURES GRID */
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.featureCard {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 24px;
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.featureCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(93, 208, 255, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.featureCard:hover {
+  transform: translateY(-6px) scale(1.01);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+  border-color: rgba(93, 208, 255, 0.3);
+  box-shadow: 0 12px 40px rgba(93, 208, 255, 0.15), 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.featureCard:hover::before {
+  opacity: 1;
+}
+
+/* Restore large icons and centered text */
+.featureCard .featureTitle,
+.featureCard .featureDesc {
+  text-align: center;
+}
+
+.featureIcon {
+  font-size: 4rem;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.featureTitle {
+  color: var(--fg);
+  margin-bottom: 12px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.featureDesc {
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* More space above the team member name so it separates clearly from the avatar */
+.aboutBody .featureTitle {
+  margin-top: 18px;
+}
+
+@media (max-width: 720px) {
+  .aboutBody .featureTitle {
+    margin-top: 12px;
+  }
+}
+
+/* Team avatar with circular gradient ring */
+.avatarWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.avatarRing {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0;
+  /* halo handled by pseudo-element */
+  overflow: visible;
+}
+
+.avatarRing::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% + 18px);
+  height: calc(100% + 18px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  filter: blur(8px);
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.avatarImg {
+  width: 150px;
+  height: 150px;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #051021;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .avatarRing::before {
+    width: calc(100% + 12px);
+    height: calc(100% + 12px);
+    filter: blur(6px);
+    opacity: 0.5;
+  }
+
+  .avatarImg {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Team member links (LinkedIn) */
+.teamLinks {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.linkedinLink {
+  /* More visible: accent background with white icon */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #031226;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  box-shadow: 0 4px 18px rgba(93, 208, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.linkedinLink svg {
+  width: 18px;
+  height: 18px;
+  color: #fff;
+  fill: #fff;
+}
+
+.linkedinLink:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(93, 208, 255, 0.16);
+  opacity: 0.98;
+}
+
+.linkedinLink:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(93, 208, 255, 0.18);
+}
+
+/* TRUST */
+.trustWrapper {
+  overflow: hidden;
+  margin-top: 40px;
+  position: relative;
+  /* Add fade mask on edges for smoothness */
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.trustTrack {
+  display: flex;
+  gap: 60px;
+  /* Increased gap for cleaner look */
+  align-items: center;
+  width: max-content;
+  animation: scrollLeft 35s linear infinite;
+  /* Slower, smoother animation */
+}
+
+.trustTrack:hover {
+  animation-play-state: paused;
+}
+
+.trustLogo {
+  height: 72px;
+  width: auto;
+  opacity: 0.85;
+  filter: grayscale(0.4);
+  transition: all 0.3s ease;
+  flex: 0 0 auto;
+}
+
+.trustLogo:hover {
+  opacity: 1;
+  filter: grayscale(0);
+  transform: scale(1.1);
+}
+
+/* Inverted logos for better visibility on dark background */
+.trustLogoInverted {
+  height: 72px;
+  width: auto;
+  opacity: 0.85;
+  filter: grayscale(0.4) brightness(0) invert(1);
+  transition: all 0.3s ease;
+  flex: 0 0 auto;
+}
+
+.trustLogoInverted:hover {
+  opacity: 1;
+  filter: brightness(0) invert(1);
+  transform: scale(1.1);
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 720px) {
+  .trustTrack {
+    gap: 18px;
+    animation-duration: 14s;
+  }
+
+  .trustLogo {
+    height: 48px;
+    opacity: 0.9;
+  }
+
+  .trustLogoInverted {
+    height: 48px;
+    opacity: 0.9;
+  }
+}
+
+/* Fine-tune UCL logo scale to visually match other logos */
+.trustUCL {
+  transform: none;
+  transition: transform 220ms ease;
+}
+
+/* Make UCL logo double the default height (default 72px -> 144px) */
+.trustLogo.trustUCL,
+.trustLogoInverted.trustUCL {
+  height: 144px;
+}
+
+@media (max-width: 720px) {
+
+  .trustLogo.trustUCL,
+  .trustLogoInverted.trustUCL {
+    height: 96px;
+  }
+}
+
+/* CONTACT */
+.contactCard {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 48px;
+  border-radius: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.contactText {
+  color: var(--muted);
+  margin-bottom: 32px;
+  text-align: center;
+  font-size: 1.15rem;
+}
+
+/* Contact form styles */
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formRow {
+  display: flex;
+  gap: 16px;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 16px;
+  border-radius: 10px;
+  color: var(--fg);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 0 3px rgba(93, 208, 255, 0.1);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Ensure the select dropdown and its options are dark with readable text */
+.select,
+.select option,
+.select optgroup {
+  background: rgba(0, 0, 0, 0.9) !important;
+  color: var(--fg) !important;
+}
+
+.select::-ms-expand {
+  filter: invert(1);
+}
+
+.formActions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 8px;
+  flex-direction: column;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #021025;
+  padding: 14px 32px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(93, 208, 255, 0.3);
+  width: 100%;
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(93, 208, 255, 0.4);
+}
+
+.formMeta {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.contactAlt {
+  margin-top: 24px;
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mailLink {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.mailLink:hover {
+  color: var(--accent-2);
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 120px;
+  padding: 80px 20px 40px;
+  background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(15, 15, 25, 0.95));
+  backdrop-filter: blur(10px);
+  /* Top border uses the accent gradient for a subtle highlight */
+  border-top: 3px solid transparent;
+  border-image-source: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-image-slice: 1;
+  position: relative;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
+.footerContent {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 60px;
+  margin: 0 auto 40px;
+  max-width: var(--max-width);
+  padding: 0 20px;
+}
+
+.footerLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.footerBrandRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footerLogoImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  border: none;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.footerLogoActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footerLogo .linkedinLink {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  padding: 0;
+}
+
+.footerLogo .linkedinLink svg {
+  width: 12px;
+  height: 12px;
+}
+
+.footerEmail {
+  color: var(--muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footerEmail:hover {
+  color: var(--accent);
+}
+
+/* Contact actions placed under the tagline */
+.footerContactActions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+@media (max-width: 720px) {
+  .footerContactActions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* Ensure contact-area LinkedIn button size overrides global rules */
+.footerContactActions .linkedinLink {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 7px !important;
+  padding: 0 !important;
+}
+
+.footerContactActions .linkedinLink svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.footerTagline {
+  color: var(--muted);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.footerLinks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.footerColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footerColumn h4 {
+  color: var(--fg);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.footerColumn a {
+  color: var(--muted);
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.footerColumn a:hover {
+  color: var(--accent);
+}
+
+.footerBottom {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Ensure anchor targets appear below the sticky navbar when scrolled to */
+.section,
+.footer {
+  scroll-margin-top: 84px;
+}
+
+@media (max-width: 720px) {
+
+  .section,
+  .footer {
+    scroll-margin-top: 64px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section {
+    padding: 80px 0;
+    margin-top: 40px;
+  }
+
+  .footer {
+    margin-top: 80px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 980px) {
+  .heroTitle {
+    font-size: 2.75rem;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .processGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutBody {
+    grid-template-columns: 1fr;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .footerContent {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .section {
+    padding: 100px 0;
+    margin-top: 50px;
+  }
+
+  .footer {
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 720px) {
+  .navLinks {
+    display: none;
+  }
+
+  /* Keep language selector visible on mobile */
+  .langSelector {
+    display: flex;
+    margin-left: 0;
+  }
+
+  .navbar {
+    padding: 12px 20px;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .logoMark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .hero {
+    padding: 40px 0 60px;
+  }
+
+  .heroTitle {
+    font-size: 2.25rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+  }
+
+  .heroMeta {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .featuresGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formRow {
+    flex-direction: column;
+  }
+
+  .contactCard {
+    padding: 32px 24px;
+  }
+
+  /* smaller upward nudge on mobile so content doesn't hit the top edge */
+  .heroContent {
+    transform: translateY(-24px);
+  }
+
+  .heroTitle {
+    white-space: normal;
+  }
+}
+
+/* Sticky Mobile CTA */
+.stickyCta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px 24px;
+  background: linear-gradient(180deg, rgba(10, 15, 26, 0), rgba(10, 15, 26, 0.95) 20%, #0a0f1a);
+  z-index: 100;
+  display: none;
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.3s ease;
+  pointer-events: none;
+  /* Let clicks pass through when hidden */
+}
+
+.stickyCta button {
+  pointer-events: auto;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(93, 208, 255, 0.4);
+}
+
+@media (max-width: 720px) {
+  .stickyCta {
+    display: block;
+  }
+}
+
+/* About Text container */
+.aboutText {
+  margin-top: 48px;
+}
+
+/* About Highlight Box - restored */
+.aboutHighlight {
+  background: linear-gradient(135deg, rgba(93, 208, 255, 0.06), rgba(167, 139, 250, 0.06));
+  padding: 24px 32px;
+  border-radius: 12px;
+  color: var(--fg);
+  border: 1px solid rgba(93, 208, 255, 0.12);
+  font-size: 1.1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 60px;
+  /* Increased margin to separate from cards */
+  line-height: 1.6;
+}
+
+/* =========================================
+   OPTION D: ADVANCED MOTION & WOW EFFECTS
+   ========================================= */
+
+/* Base Disclosure Class - elements are hidden by default if they have this class */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.revealVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays */
+.delay100 {
+  transition-delay: 100ms;
+}
+
+.delay200 {
+  transition-delay: 200ms;
+}
+
+.delay300 {
+  transition-delay: 300ms;
+}
+
+.delay400 {
+  transition-delay: 400ms;
+}
+
+.delay500 {
+  transition-delay: 500ms;
+}
+
+/* Different reveal types */
+.revealFade {
+  opacity: 0;
+  transform: none;
+}
+
+.revealFade.revealVisible {
+  opacity: 1;
+}
+
+.revealScale {
+  opacity: 0;
+  transform: scale(0.92) translateY(20px);
+}
+
+.revealScale.revealVisible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.revealBlur {
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(0.95);
+  transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.revealBlur.revealVisible {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+
+/* 3D TILT EFFECT REMOVED - using standard hover */
+
+/* Button Pulse / Ripple Glow Animation */
+@keyframes buttonPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(93, 208, 255, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(93, 208, 255, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(93, 208, 255, 0);
+  }
+}
+
+.primaryBtn.pulse {
+  animation: buttonPulse 2s infinite;
+}
+
+/* Liquid Blob Background Enhancement */
+.blob {
+  position: absolute;
+  filter: blur(80px);
+  z-index: -1;
+  opacity: 0.6;
+  animation: floatBlob 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes floatBlob {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(40px, -40px) rotate(20deg);
+  }
+}
+
+.aboutHighlight strong {
+  font-weight: 600;
+  color: #fff;
+}
