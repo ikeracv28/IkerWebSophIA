@@ -1,13 +1,19 @@
-
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 
 export default function Navbar({ t, lang, setLang }) {
+    const router = useRouter();
+
+    const isActive = (path) => {
+        return router.pathname === path ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink;
+    };
+
     return (
         <header className={styles.navbar}>
             <div className={styles.navInner}>
-                <Link href="#home" className={styles.logo}>
+                <Link href="/" className={styles.logo}>
                     <div style={{ position: 'relative', width: '32px', height: '32px' }}>
                         <Image
                             src="/logos/sophia.png"
@@ -22,19 +28,22 @@ export default function Navbar({ t, lang, setLang }) {
                 </Link>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
                     <nav className={styles.navLinks}>
-                        <Link href="#home" className={styles.navLink}>
+                        <Link href="/" className={isActive('/')}>
                             {t.nav.home}
                         </Link>
-                        <Link href="#what" className={styles.navLink}>
+                        <Link href="/features" className={isActive('/features')}>
                             {t.nav.what}
                         </Link>
-                        <Link href="#how" className={styles.navLink}>
+                        <Link href="/how-it-works" className={isActive('/how-it-works')}>
                             {t.nav.how}
                         </Link>
-                        <Link href="#about" className={styles.navLink}>
+                        <Link href="/about" className={isActive('/about')}>
                             {t.nav.about}
                         </Link>
-                        <Link href="#contact" className={styles.navLink}>
+                        <Link href="/faq" className={isActive('/faq')}>
+                            {t.nav.faq}
+                        </Link>
+                        <Link href="/demo" className={isActive('/demo')}>
                             {t.nav.contact}
                         </Link>
                     </nav>

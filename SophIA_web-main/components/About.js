@@ -1,8 +1,17 @@
-
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
 export default function About({ t }) {
+    // Force visibility on mount
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        setVisible(true);
+    }, []);
+
+    const revealClass = `${styles.reveal} ${visible ? styles.revealVisible : ''}`;
+
     // Usar rutas relativas para Next.js Image
     const team = [
         { ...t.about.team[1], img: '/img/guillermo.jpeg', linkedin: 'https://www.linkedin.com/in/guillermo-fer/' },
@@ -14,9 +23,9 @@ export default function About({ t }) {
     return (
         <section id="about" className={styles.section}>
             <div className={styles.sectionHeader}>
-                <span className={`${styles.sectionKicker} ${styles.reveal} ${styles.delay100}`}>{t.about.kicker}</span>
-                <h2 className={`${styles.sectionTitle} ${styles.reveal} ${styles.delay200}`}>{t.about.title}</h2>
-                <p className={`${styles.sectionSubtitle} ${styles.reveal} ${styles.delay300}`}>
+                <span className={`${styles.sectionKicker} ${revealClass} ${styles.delay100}`}>{t.about.kicker}</span>
+                <h2 className={`${styles.sectionTitle} ${revealClass} ${styles.delay200}`}>{t.about.title}</h2>
+                <p className={`${styles.sectionSubtitle} ${revealClass} ${styles.delay300}`}>
                     {t.about.subtitle}
                 </p>
             </div>
@@ -25,7 +34,7 @@ export default function About({ t }) {
                 <div className={styles.teamRow}>
                     <div className={styles.teamGrid}>
                         {team.map((member, idx) => (
-                            <div key={idx} className={`${styles.featureCard} ${styles.reveal} ${styles.revealScale}`} style={{ transitionDelay: `${(idx + 1) * 150}ms` }}>
+                            <div key={idx} className={`${styles.featureCard} ${revealClass} ${styles.revealScale}`} style={{ transitionDelay: `${(idx + 1) * 150}ms` }}>
                                 <div className={styles.avatarWrap}>
                                     <div className={styles.avatarRing}>
                                         <Image

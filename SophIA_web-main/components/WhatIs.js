@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 
 // Gradient Definitions for reusability
@@ -56,13 +57,22 @@ const Icons = {
 };
 
 export default function WhatIs({ t }) {
+    // Force visibility on mount since we are on a dedicated page
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        setVisible(true);
+    }, []);
+
+    const revealClass = `${styles.reveal} ${visible ? styles.revealVisible : ''}`;
+
     return (
         <section id="what" className={styles.section}>
             <GradientDefs />
             <div className={styles.sectionHeader}>
-                <span className={`${styles.sectionKicker} ${styles.reveal} ${styles.delay100}`}>{t.what.kicker}</span>
-                <h2 className={`${styles.sectionTitle} ${styles.reveal} ${styles.delay200}`}>{t.what.title}</h2>
-                <p className={`${styles.sectionSubtitle} ${styles.reveal} ${styles.delay300}`} style={{ fontWeight: 600, color: '#a78bfa', fontSize: '1.25rem', marginTop: '1rem' }}>
+                <span className={`${styles.sectionKicker} ${revealClass} ${styles.delay100}`}>{t.what.kicker}</span>
+                <h2 className={`${styles.sectionTitle} ${revealClass} ${styles.delay200}`}>{t.what.title}</h2>
+                <p className={`${styles.sectionSubtitle} ${revealClass} ${styles.delay300}`} style={{ fontWeight: 600, color: '#a78bfa', fontSize: '1.25rem', marginTop: '1rem' }}>
                     {t.what.subtitle}
                 </p>
             </div>
@@ -75,7 +85,7 @@ export default function WhatIs({ t }) {
                     return (
                         <div
                             key={idx}
-                            className={`${styles.featureCard} ${isLarge ? styles.colSpan2 : ''} ${styles.reveal} ${styles.revealScale}`}
+                            className={`${styles.featureCard} ${isLarge ? styles.colSpan2 : ''} ${revealClass} ${styles.revealScale}`}
                             style={{ transitionDelay: `${(idx + 1) * 100}ms` }}
                         >
                             <div className={styles.featureIcon}>

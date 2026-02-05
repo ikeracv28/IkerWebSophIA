@@ -6,7 +6,8 @@ export const translations = {
       what: "Qué es SophIA",
       how: "Cómo funciona",
       about: "Sobre nosotros",
-      contact: "Contacto"
+      contact: "Contacto",
+      faq: "Preguntas Frecuentes"
     },
     // Hero Section
     hero: {

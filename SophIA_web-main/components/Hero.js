@@ -25,7 +25,7 @@ export default function Hero({ t }) {
                                 {t.hero.howItWorks}
                             </button>
                         </Link>
-                        <Link href="#contact">
+                        <Link href="/demo">
                             <button className={`${styles.primaryBtn} ${styles.pulse}`}>
                                 {/* REFACTOR COPIA: Llamada a la acción (CTA) */}
                                 {t.hero.requestDemo}

@@ -29,13 +29,14 @@ export default function Footer({ t }) {
                 <div className={styles.footerLinks}>
                     <div className={styles.footerColumn}>
                         <h4>{t.footer.product}</h4>
-                        <Link href="#what">{t.nav.what}</Link>
-                        <Link href="#how">{t.nav.how}</Link>
+                        <Link href="/features">{t.nav.what}</Link>
+                        <Link href="/how-it-works">{t.nav.how}</Link>
+                        <Link href="/faq">{t.nav.faq}</Link>
                     </div>
                     <div className={styles.footerColumn}>
                         <h4>{t.footer.company}</h4>
-                        <Link href="#about">{t.nav.about}</Link>
-                        <Link href="#contact">{t.nav.contact}</Link>
+                        <Link href="/about">{t.nav.about}</Link>
+                        <Link href="/demo">{t.nav.contact}</Link>
                     </div>
                 </div>
             </div>

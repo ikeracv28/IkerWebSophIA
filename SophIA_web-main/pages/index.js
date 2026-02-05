@@ -9,13 +9,9 @@ import useScrollReveal from "../hooks/useScrollReveal";
 // Componentes
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import WhatIs from "../components/WhatIs";
-import HowItWorks from "../components/HowItWorks";
-import About from "../components/About";
-import Trust from "../components/Trust";
-import FAQ from "../components/FAQ";
-import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import Trust from "../components/Trust";
+import useScrollNavigation from "../hooks/useScrollNavigation";
 
 export default function Home() {
   const [lang, setLang] = useState("es");
@@ -23,6 +19,7 @@ export default function Home() {
 
   // Animation Hooks
   useScrollReveal();
+  useScrollNavigation('/features', null); // Navigate to next page on scroll
 
   const t = translations[lang];
 
@@ -95,12 +92,7 @@ export default function Home() {
 
         <main className={styles.shell}>
           <Hero t={t} />
-          <WhatIs t={t} />
-          <HowItWorks t={t} />
-          <About t={t} />
           <Trust t={t} />
-          <FAQ t={t} />
-          <Contact t={t} lang={lang} />
         </main>
 
         <Footer t={t} />
@@ -113,7 +105,7 @@ export default function Home() {
             opacity: showSticky ? 1 : 0
           }}
         >
-          <a href="#contact" style={{ width: '100%', textDecoration: 'none' }}>
+          <a href="/demo" style={{ width: '100%', textDecoration: 'none' }}>
             <button className={styles.primaryBtn} style={{ width: '100%', padding: '12px 20px', fontSize: '1rem', boxShadow: '0 -4px 20px rgba(0,0,0,0.3)' }}>
               {t.hero.requestDemo}
             </button>
