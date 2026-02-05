@@ -14,7 +14,7 @@ export default function Hero({ t }) {
                     </div>
                     {/* REFACTOR COPIA: Titular Principal */}
                     <h1 className={`${styles.heroTitle} ${styles.reveal} ${styles.delay200}`}>
-                        Corrige ejercicios en minutos, <span>no en horas</span>
+                        {t.hero.title}<span>{t.hero.titleHighlight}</span>
                     </h1>
                     <p className={`${styles.heroSubtitle} ${styles.reveal} ${styles.delay300}`}>
                         {t.hero.subtitle}
@@ -28,7 +28,7 @@ export default function Hero({ t }) {
                         <Link href="#contact">
                             <button className={`${styles.primaryBtn} ${styles.pulse}`}>
                                 {/* REFACTOR COPIA: Llamada a la acción (CTA) */}
-                                Solicita Demo y Recupera tus 10 Horas Semanales
+                                {t.hero.requestDemo}
                             </button>
                         </Link>
                     </div>

@@ -19,9 +19,11 @@
 
 /* NAVBAR */
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 60;
+  left: 0;
+  width: 100%;
+  z-index: 999;
   background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(15, 15, 25, 0.95));
   backdrop-filter: blur(10px);
   /* Bottom border uses the accent gradient for a subtle highlight */
@@ -29,7 +31,7 @@
   border-image-source: linear-gradient(90deg, var(--accent), var(--accent-2));
   border-image-slice: 1;
   padding: 16px 20px;
-  margin: 0 -20px;
+  /* Removed negative margins as fixed position spans viewport */
 }
 
 .navInner {
