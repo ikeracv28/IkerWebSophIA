@@ -700,23 +700,55 @@
   color: #ffffff !important;
 }
 
-/* FEATURES GRID */
+/* FEATURES GRID (BENTO STYLE) */
 .featuresGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 24px;
   margin-top: 40px;
 }
 
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .featuresGrid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(280px, auto);
+  }
+
+  .teamGrid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .colSpan2 {
+    grid-column: span 2;
+  }
+}
+
+
 .featureCard {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 24px;
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 32px;
+  border-radius: 24px;
   transition: all 0.4s cubic-bezier(0.2, 0.9, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
 }
 
 .featureCard::before {
@@ -743,39 +775,63 @@
   opacity: 1;
 }
 
-/* Restore large icons and centered text */
+/* Restore large icons and aligned text based on card type */
 .featureCard .featureTitle,
 .featureCard .featureDesc {
-  text-align: center;
+  text-align: left;
 }
 
 .featureIcon {
-  font-size: 4rem;
-  margin: 0 auto 24px;
+  width: 48px;
+  height: 48px;
+  margin: 0 0 24px 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
+  justify-content: flex-start;
+  /* Removed text-fill-color hack as SVGs use stroke property now */
+  /* filter: drop-shadow(0 4px 12px rgba(93, 208, 255, 0.3)); */
+  /* Subtle glow handled by SVG stroke, or keep filter if needed. Keeping filter for bloom. */
+  filter: drop-shadow(0 0 8px rgba(93, 208, 255, 0.4));
 }
 
 .featureTitle {
   color: var(--fg);
   margin-bottom: 12px;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  text-align: center;
+  text-align: left;
 }
 
 .featureDesc {
   color: var(--muted);
   line-height: 1.6;
-  font-size: 1.1rem;
-  text-align: center;
+  font-size: 1.05rem;
+  text-align: left;
+  max-width: 90%;
+}
+
+/* Specific styling for the large cards */
+.colSpan2 .featureTitle {
+  font-size: 1.8rem;
+}
+
+.colSpan2 .featureDesc {
+  font-size: 1.15rem;
 }
 
 /* More space above the team member name so it separates clearly from the avatar */
+.aboutBody .featureCard {
+  align-items: center;
+}
+
 .aboutBody .featureTitle {
   margin-top: 18px;
+  text-align: center;
+}
+
+.aboutBody .featureDesc {
+  text-align: center;
+  max-width: 100%;
 }
 
 @media (max-width: 720px) {
@@ -1564,4 +1620,150 @@
 .aboutHighlight strong {
   font-weight: 600;
   color: #fff;
+}
+
+/* ============================================
+   CONTACT SECTION
+   ============================================ */
+
+.contactCard {
+  max-width: 700px;
+  margin: 40px auto 0;
+  padding: 48px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.contactText {
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+  
+  .contactCard {
+    padding: 32px 24px;
+  }
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(93, 208, 255, 0.1);
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235DD0FF' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.select option {
+  background: #031226;
+  color: var(--fg);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.formActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #031226;
+  border: none;
+  padding: 16px 48px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(93, 208, 255, 0.3);
+  min-width: 200px;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(93, 208, 255, 0.4);
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.contactAlt {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.mailLink {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.mailLink:hover {
+  border-bottom-color: var(--accent);
+  color: var(--accent-2);
 }

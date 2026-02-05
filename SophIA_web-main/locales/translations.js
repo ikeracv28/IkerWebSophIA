@@ -27,32 +27,32 @@ export const translations = {
       subtitle: "SophIA no sustituye al docente, sino que le permite centrarse en lo que verdaderamente es único e insustituible: enseñar.",
       features: [
         {
-          icon: "⏱️",
+          icon: "time",
           title: "Ahorra 7-10 horas semanales",
           desc: "SophIA reduce drásticamente el tiempo dedicado a correcciones, permitiéndote dedicar más tiempo a lo que importa: enseñar."
         },
         {
-          icon: "🎯",
+          icon: "quality",
           title: "Correcciones de calidad garantizada",
           desc: "Herramientas innovadoras de IA desarrolladas por un equipo especializado que asegura la mayor vanguardia y eficiencia."
         },
         {
-          icon: "🎓",
+          icon: "control",
           title: "Control total del docente",
           desc: "Utiliza tus propios datos curados. Configuración rápida, sencilla y supervisada completamente por ti."
         },
         {
-          icon: "💬",
+          icon: "feedback",
           title: "Feedback detallado y personalizado",
           desc: "SophIA proporciona retroalimentación específica para cada alumno y respuesta, mejorando el aprendizaje."
         },
         {
-          icon: "🗃️",
+          icon: "database",
           title: "Base de datos configurable",
           desc: "Usa tus archivos o la base de datos interna de SophIA. Tú decides qué recursos utilizar."
         },
         {
-          icon: "⚡",
+          icon: "speed",
           title: "IA que agiliza, no que reemplaza",
           desc: "Mantienes la calidad de la corrección mientras la IA acelera el proceso. El mejor de ambos mundos."
         }
@@ -99,6 +99,12 @@ export const translations = {
       title: "Nuestra historia",
       subtitle: "Nacida en la universidad. Diseñada para transformarla.",
       team: [
+        {
+          name: "Iker Acevedo",
+          role: "Full Stack Developer",
+          image: "/team/iker.jpg",
+          desc: "Desarrollador Full Stack. Con formación en Desarrollo de Aplicaciones Multiplataforma, aporta solidez técnica en Java y desarrollo web moderno, combinando eficiencia en backend con interfaces de usuario intuitivas."
+        },
         {
           name: "Guillermo Fernández",
           desc: "Estudiante de Ingeniería Industrial en la UC3M. Ha estudiado en UC Berkeley y trabajado en McKinsey & Company y The Startup CFO. Apasionado por el impacto tecnológico con enfoque estructurado."
@@ -211,32 +217,32 @@ export const translations = {
       subtitle: "SophIA doesn't replace teachers, but allows them to focus on what is truly unique and irreplaceable: teaching.",
       features: [
         {
-          icon: "⏱️",
+          icon: "time",
           title: "Save 7-10 hours weekly",
           desc: "SophIA drastically reduces the time spent on grading, allowing you to dedicate more time to what matters: teaching."
         },
         {
-          icon: "🎯",
+          icon: "quality",
           title: "Guaranteed quality grading",
           desc: "Innovative AI tools developed by a specialized team ensuring cutting-edge technology and efficiency."
         },
         {
-          icon: "🎓",
+          icon: "control",
           title: "Full teacher control",
           desc: "Use your own curated data. Quick, simple setup completely supervised by you."
         },
         {
-          icon: "💬",
+          icon: "feedback",
           title: "Detailed and personalized feedback",
           desc: "SophIA provides specific feedback for each student and answer, improving learning outcomes."
         },
         {
-          icon: "🗃️",
+          icon: "database",
           title: "Configurable database",
           desc: "Use your own files or SophIA's internal database. You decide which resources to use."
         },
         {
-          icon: "⚡",
+          icon: "speed",
           title: "AI that streamlines, not replaces",
           desc: "Maintain grading quality while AI speeds up the process. The best of both worlds."
         }
@@ -283,6 +289,12 @@ export const translations = {
       title: "Our story",
       subtitle: "Created by students, for real teachers.",
       team: [
+        {
+          name: "Iker Acevedo",
+          role: "Full Stack Developer",
+          image: "/team/iker.jpg",
+          desc: "Full Stack Developer. With a background in Cross-Platform Application Development, brings technical solidity in Java and modern web development, combining backend efficiency with intuitive user interfaces."
+        },
         {
           name: "Guillermo Fernández",
           desc: "Industrial Engineering student at UC3M. Has studied at UC Berkeley and worked at McKinsey & Company and The Startup CFO. Passionate about technological impact with a structured approach."
