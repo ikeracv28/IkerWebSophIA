@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import { translations } from "../locales/translations";
 import useScrollReveal from "../hooks/useScrollReveal";
-import useMouseTrail from "../hooks/useMouseTrail";
+// useMouseTrail removed for performance/clean design choice
 
 // Componentes
 import Navbar from "../components/Navbar";
@@ -23,7 +23,6 @@ export default function Home() {
 
   // Animation Hooks
   useScrollReveal();
-  useMouseTrail();
 
   const t = translations[lang];
 

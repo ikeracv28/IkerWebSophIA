@@ -106,8 +106,8 @@ export default function useMouseTrail() {
             lastMousePosition.current = { x, y };
 
             // Performance Cap
-            if (points.current.length > 200) {
-                points.current = points.current.slice(points.current.length - 200);
+            if (points.current.length > 80) {
+                points.current = points.current.slice(points.current.length - 80);
             }
         };
 
@@ -122,7 +122,7 @@ export default function useMouseTrail() {
                 const p = points.current[i];
 
                 // Decay - Faster fade for "shorter trail"
-                p.life -= 0.16;
+                p.life -= 0.18;
 
                 if (p.life > 0) {
                     ctx.beginPath();
