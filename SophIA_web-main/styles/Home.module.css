@@ -166,8 +166,10 @@
 /* Full-viewport animated hero card: translucent gradient so text remains readable */
 .heroCard {
   width: 100vw;
-  height: 100vh;
-  padding: 80px 24px;
+  min-height: 100vh;
+  height: auto;
+  padding: 120px 24px 80px;
+  /* Increased top padding for better breathing room */
   border-radius: 0;
   overflow: hidden;
   /* slightly more opaque translucent gradient to improve text contrast */
@@ -256,6 +258,8 @@
   font-weight: 700;
   font-size: 1.05rem;
   margin-bottom: 24px;
+  margin-top: 100px;
+  /* Added spacing to clear the navbar */
 }
 
 .heroTagDot {
@@ -349,6 +353,52 @@
   border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* HERO IMAGE (Laptop Demo) */
+.heroImageContainer {
+  margin-top: 48px;
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  /* Perspective for potential 3D tilt effects */
+  perspective: 1000px;
+}
+
+.heroLaptop {
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 2;
+  border-radius: 12px;
+  /* Premium Shadow: Multi-layered for depth */
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 0 1px rgba(255, 255, 255, 0.1));
+  will-change: transform;
+  /* Slight upstream tilt for "floating" effect */
+  transform: rotateX(2deg);
+  transition: transform 0.5s ease;
+}
+
+.heroLaptop:hover {
+  transform: rotateX(0deg) scale(1.01);
+}
+
+/* Ambient Glow behind the image */
+.heroImageGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(93, 208, 255, 0.15) 0%, rgba(167, 139, 250, 0.08) 40%, transparent 70%);
+  filter: blur(60px);
+  z-index: 1;
+  pointer-events: none;
+}
+
 .heroMeta {
   display: flex;
   gap: 24px;
@@ -356,13 +406,53 @@
   font-size: 1.05rem;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 48px;
 }
 
 /* SECTIONS */
 .section {
-  padding: 120px 0;
+  padding: 100px 0 120px;
+  /* Reduced top padding from 120px to 100px */
   position: relative;
-  margin: 80px 0 0 0;
+  margin: 0;
+}
+
+/* Specific tighter section for Trust/Brands to integrate with Hero */
+.trustSection {
+  padding: 40px 0 80px;
+  /* Reduced top padding further for visual connection */
+  position: relative;
+  margin: 0;
+  z-index: 3;
+}
+
+/* Remove the decorative line for trust section to make it feel same-page */
+.trustSection::before {
+  display: none;
+}
+
+.trustSection .sectionHeader {
+  margin-bottom: 24px;
+}
+
+.trustSection .sectionKicker {
+  display: none;
+}
+
+.trustSection .sectionTitle {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ffffff;
+  /* Bright white as requested */
+  font-weight: 600;
+  margin-bottom: 0;
+  opacity: 1;
+  /* Fully visible */
+}
+
+.trustSection .sectionSubtitle {
+  display: none;
 }
 
 /* Gentle fade at the top of the first section to blend with the hero */

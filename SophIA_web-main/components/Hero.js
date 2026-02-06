@@ -32,7 +32,18 @@ export default function Hero({ t }) {
                             </button>
                         </Link>
                     </div>
-                    <div className={`${styles.heroMeta} ${styles.reveal} ${styles.delay500}`}>
+
+                    {/* New Hero Product Image */}
+                    <div className={`${styles.heroImageContainer} ${styles.reveal} ${styles.revealScale} ${styles.delay500}`}>
+                        <div className={styles.heroImageGlow} />
+                        <img
+                            src="/hero-laptop.png"
+                            alt="SophIA Dashboard Demo"
+                            className={styles.heroLaptop}
+                        />
+                    </div>
+
+                    <div className={`${styles.heroMeta} ${styles.reveal} ${styles.delay600}`}>
                         <span>{t.hero.meta1}</span>
                         <span>{t.hero.meta2}</span>
                         <span>{t.hero.meta3}</span>

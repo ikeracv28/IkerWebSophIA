@@ -22,7 +22,7 @@ export default function Trust({ t }) {
     ];
 
     return (
-        <section id="trust" className={styles.section}>
+        <section id="trust" className={styles.trustSection}>
             <div className={styles.sectionHeader}>
                 <span className={`${styles.sectionKicker} ${revealClass} ${styles.delay100}`}>{t.trust.kicker}</span>
                 <h2 className={`${styles.sectionTitle} ${revealClass} ${styles.delay200}`}>{t.trust.title}</h2>
