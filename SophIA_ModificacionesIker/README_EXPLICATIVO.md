@@ -36,19 +36,16 @@ Sustituimos ilustraciones abstractas genéricas en la sección "Cómo funciona" 
 - **Implementación**: Código SVG puro inyectado directamente en `HowItWorks.js` para evitar peticiones HTTP adicionales y asegurar una nitidez perfecta en cualquier pantalla.
 
 ### 4. Calidad de Código e Internacionalización
-- **Estandarización**: Tradujimos el 100% de los comentarios del código de español a inglés para seguir estándares internacionales de desarrollo.
 - **Soporte Bilingüe Robusto**: Sistema de diccionario `t` centralizado en `locales/translations.js`, permitiendo el cambio instantáneo entre Español e Inglés sin recargas, asegurando que ningún texto (como el "FAQ" que faltaba) se quede sin traducir.
 
 ---
 
-## 🛠 Stack Tecnológico
+## 🏗 Enlace de repositorio de github
+https://github.com/ikeracv28/IkerWebSophIA
 
-- **Framework**: Next.js 16 (React) - Arquitectura de servidor y cliente híbrida.
-- **Estilos**: Módulos CSS (CSS Modules) - Rendimiento nativo sin sobrecarga de runtime.
-- **Estado**: React Hooks (`useState`, `useEffect`, `useRef`) para lógica ligera.
-- **Rendimiento**: SVGs Nativos + Next/Image Optimization.
+## 🏗 Enlace de pagina montada en servidor de vercel, para que puedas ver el resultado final
+https://iker-web-soph-ia.vercel.app/
 
----
 
 ## 🏗 Para Empezar
 
@@ -62,3 +59,5 @@ npm run dev
 # Construir para producción
 npm run build
 ```
+
+

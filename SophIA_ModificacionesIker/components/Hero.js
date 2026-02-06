@@ -20,7 +20,7 @@ export default function Hero({ t }) {
                         {t.hero.subtitle}
                     </p>
                     <div className={`${styles.heroActions} ${styles.reveal} ${styles.delay400}`}>
-                        <Link href="#how">
+                        <Link href="/how-it-works">
                             <button className={styles.secondaryBtn}>
                                 {t.hero.howItWorks}
                             </button>
